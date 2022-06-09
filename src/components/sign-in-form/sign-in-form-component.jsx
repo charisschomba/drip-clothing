@@ -7,6 +7,7 @@ import {
   signInGoogleWithPopup,
 } from "../../utils/firbase/firebase.utils";
 import "./sign-in-form.styles.scss";
+
 const defaultFormFields = {
   email: "",
   password: "",
@@ -16,6 +17,7 @@ const SignInForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
 
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormFields({ ...formFields, [name]: value });
@@ -23,16 +25,14 @@ const SignInForm = () => {
   const resetFormFields = () => setFormFields(defaultFormFields);
 
   const signInWithGoogle = async () => {
-    const { user } = await signInGoogleWithPopup();
-    createUserDocumentFromAuth(user);
+    await signInGoogleWithPopup();
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const { email, password } = formFields;
     try {
-      const res = await signInUserWithEmailAndPassword(email, password);
-      console.log(res);
+      await signInUserWithEmailAndPassword(email, password);
       resetFormFields();
     } catch (error) {
       switch (error.code) {

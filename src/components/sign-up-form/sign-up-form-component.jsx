@@ -6,6 +6,7 @@ import {
   createUserDocumentFromAuth,
 } from "../../utils/firbase/firebase.utils";
 import "./sign-up-form.styles.scss";
+
 const defaultFormFields = {
   displayName: "",
   email: "",
@@ -30,8 +31,8 @@ const SignUpForm = () => {
       return;
     }
     try {
-      const res = await createAuthUserWithEmailAndPassword(email, password);
-      createUserDocumentFromAuth(res.user, { displayName });
+      const {user} = await createAuthUserWithEmailAndPassword(email, password);
+      createUserDocumentFromAuth(user, { displayName });
       alert("User created");
       resetFormFields();
     } catch (error) {
