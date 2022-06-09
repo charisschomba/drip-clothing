@@ -3,10 +3,14 @@ import { ReactComponent as CrownLogo } from "../../assets/crown.svg";
 import { Fragment, useContext } from "react";
 import "./navigatiom.styles.scss";
 import { UserContext } from "../../contexts/user.context";
-import { signOutUser } from '../../utils/firbase/firebase.utils';
+import { CartContext } from "../../contexts/cart.context";
+import { signOutUser } from "../../utils/firbase/firebase.utils";
+import CartIcon from "../../components/cart-icon/cart-icon.component";
+import CartDropDown from "../../components/cart-dropdown/cart-dropdown.component";
 
 const Navigation = () => {
   const { currentUser } = useContext(UserContext);
+  const { isCartOpen } = useContext(CartContext);
 
   return (
     <Fragment>
@@ -19,13 +23,18 @@ const Navigation = () => {
             SHOP
           </Link>
           {currentUser ? (
-            <span className="nav-link" onClick={signOutUser}>SIGN OUT</span>
+            <span className="nav-link" onClick={signOutUser}>
+              SIGN OUT
+            </span>
           ) : (
             <Link className="nav-link" to="/auth">
               SIGN IN
             </Link>
           )}
+          <CartIcon />
         </div>
+        {isCartOpen && <CartDropDown />}
+        
       </div>
       <Outlet />
     </Fragment>
